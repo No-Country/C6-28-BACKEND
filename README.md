@@ -13,3 +13,5 @@
 ![](./assets/gitflow2-c6.jpg)
 
 ## Modelado de la Base de Datos
+
+![](./assets/db-model.png)
