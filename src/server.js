@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import app from './app.js';
 import { sequelize } from './database/database.js';
 
