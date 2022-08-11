@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
-  res.json({ msg: 'Welcome to the API for No-Country' });
+  res.json({ msg: 'Deploy done!!' });
 });
 
 app.use('/api/v1/users', UserRoute);
