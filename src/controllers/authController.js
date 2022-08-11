@@ -1,6 +1,6 @@
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import { validatePassword, comparePass } from '../utils/compare.js';
 
 const JWT_SECRET = 'my-32-character-ultra-secure-and-ultra-long-secret';
 const JWT_EXPIRES_IN = '7d';
@@ -9,10 +9,6 @@ const signToken = (id) => {
   return jwt.sign({ id }, JWT_SECRET, {
     expiresIn: JWT_EXPIRES_IN,
   });
-};
-
-const validatePassword = async (password, userPassword) => {
-  return await bcrypt.compare(password, userPassword);
 };
 
 export const login = async (req, res) => {
@@ -40,7 +36,10 @@ export const signUp = async (req, res) => {
     const user = await User.findOne({ where: { email } });
     if (user) {
       return res.status(400).json({ msg: 'El usuario ya existe' });
+    } else if (!comparePass(password, confirmarPassword)) {
+      return res.status(400).json({ msg: 'Las contraseñas no coinciden' });
     }
+
     const newUser = await User.create({
       nombre,
       apellidos,
