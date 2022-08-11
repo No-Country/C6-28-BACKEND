@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Backend para c6-28-t-vue-node",
   "main": "server.js",
+  "node": "16.x",
+  "npm": "7.x",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
