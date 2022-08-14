@@ -11,7 +11,8 @@
     "start": "NODE_ENV=production node src/server.js",
     "dev": "nodemon src/server.js",
     "prepare": "husky install",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "docs:build": "npx insomnia-documenter --config assets/Insomnia.json --output docs"
   },
   "author": "Carolina Quintoman, Mikel Diaz, Kevin Huaza, James Noria",
   "license": "MIT",
