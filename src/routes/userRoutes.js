@@ -7,5 +7,6 @@ router.post('/login', AuthRoute.login);
 router.post('/signup', AuthRoute.signUp);
 
 router.get('/:id', UserRoute.getUser);
+router.get('/', UserRoute.getAllUsers);
 
 export default router;
