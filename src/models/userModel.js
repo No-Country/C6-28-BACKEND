@@ -23,11 +23,11 @@ const User = sequelize.define(
       allowNull: false,
       unique: true,
       validate: {
-        isEmail:{
+        isEmail: {
           msg: 'El email no es válido',
           args: true,
-        }
-      }
+        },
+      },
     },
     foto: {
       type: DataTypes.STRING,
@@ -49,6 +49,7 @@ const User = sequelize.define(
 User.beforeCreate(async (user) => {
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
+  user.confirmarPassword = user.password;
 });
 
 export default User;

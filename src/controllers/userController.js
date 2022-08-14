@@ -4,8 +4,8 @@ import handleHttpError from '../utils/httpError.js';
 export const getUser = async (req, res) => {
   try {
     const { id } = req.params;
-    // const user = await User.findByPk(id).omit('password', 'confirmarPassword');
     const user = await User.findByPk(id);
+    user.set({ password: undefined, confirmarPassword: undefined });
     res.json(user);
   } catch (error) {
     handleHttpError(res, error);
