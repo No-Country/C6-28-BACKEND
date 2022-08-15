@@ -6,7 +6,9 @@ import * as AuthRoute from '../controllers/authController.js';
 router.post('/login', AuthRoute.login);
 router.post('/signup', AuthRoute.signUp);
 
+
 router.get('/:id', UserRoute.getUser);
 router.get('/', UserRoute.getAllUsers);
+router.delete('/:id', UserRoute.deleteUser);
 
 export default router;

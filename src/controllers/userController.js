@@ -20,3 +20,17 @@ export const getAllUsers = async (req, res) => {
     handleHttpError(res, error);
   }
 };
+
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).json({ msg: 'Usuario no encontrado' });
+    }
+    await user.destroy();
+    res.json({ msg: 'Usuario eliminado correctamente' });
+  } catch (error) {
+    handleHttpError(res, error);
+  }
+} ;
