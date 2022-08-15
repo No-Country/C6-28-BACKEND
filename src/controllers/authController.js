@@ -49,9 +49,14 @@ export const signUp = async (req, res) => {
     });
 
     const token = signToken(newUser.id);
-
+    
     return res.status(200).json({ msg: 'Usuario creado correctamente', token });
   } catch (error) {
     return res.status(500).json({ msg: 'Error en el servidor' });
   }
+};
+
+export const getLogout = (req, res) => {
+  res.cookie('token' , '', {maxAge:1});
+  res.redirect('/');
 };
