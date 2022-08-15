@@ -24,14 +24,14 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.21.3"
+    "sequelize": "^6.21.3",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
     "eslint": "^8.21.0",
     "eslint-config-prettier": "^8.5.0",
-    "morgan": "^1.10.0",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1"
   }
