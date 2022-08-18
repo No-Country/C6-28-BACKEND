@@ -11,5 +11,6 @@ router.get('/logout', AuthRoute.getLogout);
 router.get('/:id', AuthMiddleware.ensureAuth, UserRoute.getUser);
 router.get('/', AuthMiddleware.ensureAuth, UserRoute.getAllUsers);
 router.delete('/:id', AuthMiddleware.ensureAuth, UserRoute.deleteUser);
+router.patch('/:id', AuthMiddleware.ensureAuth, UserRoute.updateUser); //lo hice sin el AuthMiddleware.ensureAuth para que me deje probarlo en insomnia.
 
 export default router;
