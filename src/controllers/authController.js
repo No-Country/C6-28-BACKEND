@@ -2,7 +2,7 @@ import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import { validatePassword, comparePass } from '../utils/compare.js';
 
-const path = require('path')
+const path = require('path');
 
 const JWT_SECRET = 'my-32-character-ultra-secure-and-ultra-long-secret';
 const JWT_EXPIRES_IN = '7d';
@@ -52,14 +52,15 @@ export const signUp = async (req, res) => {
     });
 
     const token = signToken(newUser.id);
+    
     const file = req.file;
     const acceptedExtensions = ['.JPG','.PNG', '.GIF'];
     if(!file){
-      throw new Error ('Subir imagen')
+      throw new Error ('Subir imagen');
     } else {
       const fileExtension = path.extname(file.originalname);
       if (acceptedExtensions.includes(fileExtension)) {
-        throw new Error(`El formato no es valido, subir ${acceptedExtensions.join(',')}`)
+        throw new Error(`El formato no es valido, subir ${acceptedExtensions.join(',')}`);
       }
     };
         
