@@ -2,6 +2,8 @@ import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import { validatePassword, comparePass } from '../utils/compare.js';
 
+const path = require('path')
+
 const JWT_SECRET = 'my-32-character-ultra-secure-and-ultra-long-secret';
 const JWT_EXPIRES_IN = '7d';
 
@@ -32,7 +34,7 @@ export const login = async (req, res) => {
 
 export const signUp = async (req, res) => {
   try {
-    const { nombre, apellidos, email, password, confirmarPassword } = req.body;
+    const { nombre, apellidos, email, password, confirmarPassword, avatar } = req.body;
     const user = await User.findOne({ where: { email } });
     if (user) {
       return res.status(400).json({ msg: 'El usuario ya existe' });
@@ -46,10 +48,21 @@ export const signUp = async (req, res) => {
       email,
       password,
       confirmarPassword,
+      avatar
     });
 
     const token = signToken(newUser.id);
-    
+    const file = req.file;
+    const acceptedExtensions = ['.JPG','.PNG', '.GIF'];
+    if(!file){
+      throw new Error ('Subir imagen')
+    } else {
+      const fileExtension = path.extname(file.originalname);
+      if (acceptedExtensions.includes(fileExtension)) {
+        throw new Error(`El formato no es valido, subir ${acceptedExtensions.join(',')}`)
+      }
+    };
+        
     return res.status(200).json({ msg: 'Usuario creado correctamente', token });
   } catch (error) {
     return res.status(500).json({ msg: 'Error en el servidor' });

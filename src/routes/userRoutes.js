@@ -12,4 +12,6 @@ router.get('/:id', UserRoute.getUser);
 router.get('/', UserRoute.getAllUsers);
 router.delete('/:id', UserRoute.deleteUser);
 
+router.post('/uploadFile', uploadFile.single('avatar'), userController.processRegister);
+
 export default router;
