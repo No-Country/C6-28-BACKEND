@@ -1,12 +1,15 @@
 import express from 'express';
 import morgan from 'morgan';
-import UserRoute from './routes/userRoutes.js';
+import UserRoutes from './routes/userRoutes.js';
 import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
 
-
+import globalErrorHandler from './controllers/errorController.js';
+import AppError from './utils/appError.js';
 
 const app = express();
 
+app.use(helmet());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,18 +33,28 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+const limiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 minute
+  max: 100,
+  message: 'excediste el número maximo de intentos',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use('/api', limiter);
+
 app.get('/', (req, res) => {
   res.sendFile('index.html');
 });
-export const limiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 minute
-  max: 100, // 
-  message:"excediste el número maximo de intentos",
-  standardHeaders: true,
-  legacyHeaders:false
+
+app.use('/api/v1/users', UserRoutes);
+
+app.all('*', (req, res, next) => {
+  next(
+    new AppError(`La ruta ${req.originalUrl} no existe en este servidor`, 404)
+  );
 });
 
-app.use('/api/v1/users',limiter, UserRoute);
-
+app.use(globalErrorHandler);
 
 export default app;

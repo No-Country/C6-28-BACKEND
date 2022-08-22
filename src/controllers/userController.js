@@ -1,57 +1,83 @@
 import User from '../models/userModel.js';
-import handleHttpError from '../utils/httpError.js';
+import AppError from '../utils/appError.js';
+import CatchAsync from '../utils/catchAsync.js';
+import multer  from 'multer';
 
-export const getUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findByPk(id);
-    res.status(200).json(user);
-  } catch (error) {
-    handleHttpError(res, error);
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/userPhoto');
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1];
+    cb(null, `user-${req.params.id}-${Date.now()}.${ext}`);
+  }
+});
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Solo imagenes permitidas!', 400), false);
   }
 };
 
-export const getAllUsers = async (req, res) => {
-  try {
-    const users = await User.findAll();
-    res.status(200).json(users);
-  } catch (error) {
-    handleHttpError(res, error);
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter
+});
+
+export const uploadUserPhoto = upload.single('foto');
+
+export const getUser = CatchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const user = await User.findByPk(id);
+  if (!id || !user) {
+    return next(new AppError('No se ha especificado el id o Usuario no econtrado', 400));
   }
-};
+  res.status(200).json(user);
+});
 
-export const deleteUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({ msg: 'Usuario no encontrado' });
-    }
-    await user.destroy();
-    res.status(204).json({ msg: 'Usuario eliminado correctamente' });
-  } catch (error) {
-    handleHttpError(res, error);
+export const getAllUsers = CatchAsync(async (req, res, next) => {
+  const users = await User.findAll();
+  if (!users) {
+    return next(new AppError('No se ha encontrado ningun usuario', 400));
   }
-};
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      users,
+    },
+  });
+});
 
+export const deleteUser = CatchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const user = await User.findByPk(id);
+  if (!user || !id) {
+    return next(new AppError('No se ha especificado el id o Usuario no econtrado', 400));
+  }
+  await user.destroy();
+  res.status(204).json({ message: 'Usuario eliminado correctamente' });
+});
 
-export const updateUser = async (req, res) => {
-  try {
-    const { id } = req.params;  
-    const { nombre, apellidos, email } = req.body;
+export const updateUser = CatchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const { nombre, apellidos, email } = req.body;
 
-    let user = await User.findByPk(id);
-    if (!user.id) {
-      res.status(404).send('No se encontro el usuario');
-      } else {
-      user = await user.update({
-        nombre,
-        apellidos,
-        email
-        });
-      res.status(200).json(user);
-    } 
-  }catch (error) {
-      handleHttpError(res, error);
-    }
-  };
+  let user = await User.findByPk(id);
+  if (!user.id || !user) {
+    return next(new AppError('No se ha especificado el id o Usuario no econtrado', 400));
+  } else {
+    user = await user.update({
+      nombre,
+      apellidos,
+      email,
+      foto: req.file.filename
+    });
+    res.status(200).json({
+      message: 'Usuario actualizado correctamente',
+      user,
+    });
+  }
+});

@@ -288,4 +288,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Public
+public
+
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,linux,windows,test

@@ -1,19 +1,28 @@
-import jwt from 'jsonwebtoken';
-const JWT_SECRET = 'my-32-character-ultra-secure-and-ultra-long-secret';
+// import jwt from 'jsonwebtoken';
+// import { promisify } from 'util';
+import AppError from '../utils/appError.js';
+import CatchAsync from '../utils/catchAsync.js';
+// import User from '../models/userModel.js';
+// import * as env from '../config/env-vars.js';
 
-export const ensureAuth = async (req, res, next) => {
+// TODO: Recibir user id del token decoded
+
+export const ensureAuth = CatchAsync(async (req, res, next) => {
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     token = req.headers.authorization.split(' ')[1];
   }
   if (!token) {
-    return res.status(401).json({ msg: 'No tienes permisos para esta acción' });
+    return next(new AppError('No se ha encontrado el token', 401));
   }
-  try {
-    const { id } = jwt.verify(token, JWT_SECRET);
-    req.user = { id };
+  next();
+});
+
+export const restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.rol)) {
+      return next(new AppError('No tienes permisos para realizar esta acción', 403));
+    }
     next();
-  } catch (error) {
-    return res.status(401).json({ msg: 'No tienes permisos para esta acción' });
-  }
+  };
 };
