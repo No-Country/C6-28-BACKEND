@@ -1,8 +1,12 @@
 import express from 'express';
 import morgan from 'morgan';
 import UserRoute from './routes/userRoutes.js';
+import rateLimit from 'express-rate-limit';
+
+
 
 const app = express();
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -29,7 +33,15 @@ if (process.env.NODE_ENV === 'development') {
 app.get('/', (req, res) => {
   res.sendFile('index.html');
 });
+export const limiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 minute
+  max: 100, // 
+  message:"excediste el número maximo de intentos",
+  standardHeaders: true,
+  legacyHeaders:false
+});
 
-app.use('/api/v1/users', UserRoute);
+app.use('/api/v1/users',limiter, UserRoute);
+
 
 export default app;
