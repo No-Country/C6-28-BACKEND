@@ -4,16 +4,16 @@ import * as UserRoute from '../controllers/userController.js';
 import * as AuthRoute from '../controllers/authController.js';
 import multer from 'multer';
 import path from 'path';
+import * as AuthMiddleware from '../middlewares/authMiddleware.js';
 
-
-router.post('/login', AuthRoute.login);
+router.post('/login',AuthRoute.login);
 router.post('/signup', AuthRoute.signUp);
 router.get('/logout', AuthRoute.getLogout);
 
-
-router.get('/:id', UserRoute.getUser);
-router.get('/', UserRoute.getAllUsers);
-router.delete('/:id', UserRoute.deleteUser);
+router.get('/:id', AuthMiddleware.ensureAuth, UserRoute.getUser);
+router.get('/', AuthMiddleware.ensureAuth, UserRoute.getAllUsers);
+router.delete('/:id', AuthMiddleware.ensureAuth, UserRoute.deleteUser);
+router.patch('/:id', AuthMiddleware.ensureAuth, UserRoute.updateUser); 
 
 
 let uploadFile = multer({ 

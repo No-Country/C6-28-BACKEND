@@ -33,3 +33,25 @@ export const deleteUser = async (req, res) => {
     handleHttpError(res, error);
   }
 };
+
+
+export const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;  
+    const { nombre, apellidos, email } = req.body;
+
+    let user = await User.findByPk(id);
+    if (!user.id) {
+      res.status(404).send('No se encontro el usuario');
+      } else {
+      user = await user.update({
+        nombre,
+        apellidos,
+        email
+        });
+      res.status(200).json(user);
+    } 
+  }catch (error) {
+      handleHttpError(res, error);
+    }
+  };
