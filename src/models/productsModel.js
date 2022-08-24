@@ -36,6 +36,15 @@ const Products = sequelize.define('products', {
     allowNull: false,
     defaultValue: true,
   },
+  nombre_marca: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  categoría: {
+    type: DataTypes.ENUM,
+    values: ['veterinaria', 'juguetes', 'alimento', 'muebles'],
+    allowNull: false
+  }
 });
 
 export default Products;
