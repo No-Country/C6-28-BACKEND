@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/users', UserRoutes);
-app.use('/api/v1/product', ProductRoutes);
+app.use('/api/v1/products', ProductRoutes);
 
 app.all('*', (req, res, next) => {
   next(
