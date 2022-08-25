@@ -15,3 +15,4 @@
 ## Modelado de la Base de Datos
 
 ![](./assets/db-model.png)
+![](./assets/db-model-products.png)
