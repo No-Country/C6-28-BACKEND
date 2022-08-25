@@ -11,7 +11,7 @@ const Products = sequelize.define('products', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  descripción: {
+  descripcion: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
@@ -31,7 +31,7 @@ const Products = sequelize.define('products', {
     },
     defaultValue: 0,
   },
-  state: {
+  existencia: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: true,
@@ -40,9 +40,9 @@ const Products = sequelize.define('products', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  categoría: {
+  categoria: {
     type: DataTypes.ENUM,
-    values: ['veterinaria', 'juguetes', 'alimento', 'muebles'],
+    values: ['ropa', 'juguetes', 'comida', 'comederos', 'macho', 'hembra'],
     allowNull: false
   }
 });
