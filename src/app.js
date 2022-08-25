@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import UserRoutes from './routes/userRoutes.js';
+import ProductRoutes from './routes/productsRoutes.js';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 
@@ -48,6 +49,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/users', UserRoutes);
+app.use('/api/v1/product', ProductRoutes);
 
 app.all('*', (req, res, next) => {
   next(
