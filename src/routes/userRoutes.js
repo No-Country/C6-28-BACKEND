@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import * as UserRoute from '../controllers/userController.js';
 import * as AuthRoute from '../controllers/authController.js';
-import * as ProductRoute from '../controllers/productController.js';
+
 import * as AuthMiddleware from '../middlewares/authMiddleware.js';
 
 router.post('/login', AuthRoute.login);

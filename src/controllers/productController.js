@@ -1,7 +1,7 @@
 import Product from '../models/productsModel.js';
 import AppError from '../utils/appError.js';
 import CatchAsync from '../utils/catchAsync.js';
-import multer  from 'multer';
+
 
 export const getproduct = CatchAsync(async (req, res, next) => {
     const users = await Product.findAll();
