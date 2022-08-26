@@ -41,8 +41,20 @@ const Products = sequelize.define('products', {
     allowNull: false,
   },
   categoria: {
-    type: DataTypes.ENUM,
-    values: ['ropa', 'juguetes', 'comida', 'comederos', 'macho', 'hembra'],
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    //values: ['ropa', 'juguetes', 'comida', 'comederos', 'macho', 'hembra'],
+    allowNull: false
+  },
+  oferta: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  porcentaje_oferta: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  fotos: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: false
   }
 });
