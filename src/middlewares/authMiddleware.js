@@ -23,19 +23,20 @@ export const ensureAuth = CatchAsync(async (req, res, next) => {
 });
 
 // creado por Kevin Huaza con ayuda de Mikel Diaz
-export const restrictTo = (roles) => CatchAsync(async (req, res, next) =>{
-  let token;
-  if (!req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-    return next(new AppError('No se ha pasado un token o es inválido', 400));
-  }
-  //if (!req.cookie.token){
-  //  return next(new AppError('No se ha pasado un token o es inválido', 400));
-  //}
-  token = req.headers.authorization.split(' ')[1];
-  const tokenData = await jwt.verify(token, JWT_SECRET);
+export const restrictTo = (roles) =>
+  CatchAsync(async (req, res, next) => {
+    let token;
+    if (!req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      return next(new AppError('No se ha pasado un token o es inválido', 400));
+    }
+    //if (!req.cookie.token){
+    //  return next(new AppError('No se ha pasado un token o es inválido', 400));
+    //}
+    token = req.headers.authorization.split(' ')[1];
+    const tokenData = await jwt.verify(token, JWT_SECRET);
 
-  if (!roles.includes(tokenData.rol)){
-    return next(new AppError('No tienes los permisos', 403));
-  }
-  next();
-});
+    if (!roles.includes(tokenData.rol)) {
+      return next(new AppError('No tienes los permisos', 403));
+    }
+    next();
+  });
