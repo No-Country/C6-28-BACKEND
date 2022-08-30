@@ -13,7 +13,7 @@ router.get('/:id', AuthMiddleware.ensureAuth, UserRoute.getUser);
 router.get(
   '/',
   AuthMiddleware.ensureAuth,
-  // AuthMiddleware.restrictTo('admin'),
+  AuthMiddleware.restrictTo('admin'),
   UserRoute.getAllUsers
 );
 router.delete('/:id', AuthMiddleware.ensureAuth, UserRoute.deleteUser);
