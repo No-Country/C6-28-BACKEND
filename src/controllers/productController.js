@@ -65,3 +65,32 @@ export const updateProduct = CatchAsync(async (req, res, next) => {
       });
     }
   });
+
+  export const addProduct = CatchAsync(async (req, res, next) => {
+    
+    const { categoria, technical_specs, precio, stock, state, oferta, porcentaje_oferta,nombre , nombre_marca, descripcion, fotos } = req.body;
+    
+    const product = await Products.findOne({where: {nombre}});
+    if(product){
+      return next (new AppError ('El producto ya existe', 400));
+      } 
+      const newProduct = await Products.create({
+        nombre,
+        descripcion,
+        technical_specs,
+        precio,
+        stock,
+        state,
+        nombre_marca,
+        categoria,
+        oferta,
+        porcentaje_oferta,
+        fotos
+        
+      });
+      res.send(200).json({
+        message: 'Producto creado correctamente',
+        newProduct,
+      });
+
+    })
