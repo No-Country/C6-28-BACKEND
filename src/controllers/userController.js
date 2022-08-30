@@ -1,7 +1,7 @@
 import User from '../models/userModel.js';
 import AppError from '../utils/appError.js';
 import CatchAsync from '../utils/catchAsync.js';
-import multer  from 'multer';
+import multer from 'multer';
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -10,7 +10,7 @@ const multerStorage = multer.diskStorage({
   filename: (req, file, cb) => {
     const ext = file.mimetype.split('/')[1];
     cb(null, `user-${req.params.id}-${Date.now()}.${ext}`);
-  }
+  },
 });
 
 const multerFilter = (req, file, cb) => {
@@ -23,7 +23,7 @@ const multerFilter = (req, file, cb) => {
 
 const upload = multer({
   storage: multerStorage,
-  fileFilter: multerFilter
+  fileFilter: multerFilter,
 });
 
 export const uploadUserPhoto = upload.single('foto');
@@ -73,7 +73,7 @@ export const updateUser = CatchAsync(async (req, res, next) => {
       nombre,
       apellidos,
       email,
-      foto: req.file.filename
+      foto: req.file.filename,
     });
     res.status(200).json({
       message: 'Usuario actualizado correctamente',

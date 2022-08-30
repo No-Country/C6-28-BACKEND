@@ -52,9 +52,7 @@ app.use('/api/v1/users', UserRoutes);
 app.use('/api/v1/products', ProductRoutes);
 
 app.all('*', (req, res, next) => {
-  next(
-    new AppError(`La ruta ${req.originalUrl} no existe en este servidor`, 404)
-  );
+  next(new AppError(`La ruta ${req.originalUrl} no existe en este servidor`, 404));
 });
 
 app.use(globalErrorHandler);

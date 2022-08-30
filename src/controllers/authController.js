@@ -5,14 +5,14 @@ import CatchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
 import * as env from '../config/env-vars.js';
 
-const signToken = (id) => {
-  return jwt.sign({ id }, env.JWT_SECRET, {
+const signToken = (id, rol) => {
+  return jwt.sign({ id, rol }, env.JWT_SECRET, {
     expiresIn: env.JWT_EXPIRES_IN,
   });
 };
 
 const createSendToken = (user, statusCode, res) => {
-  const token = signToken(user._id);
+  const token = signToken(user.id, user.rol);
 
   res.status(statusCode).json({
     status: 'success',
@@ -51,11 +51,10 @@ export const signUp = CatchAsync(async (req, res, next) => {
     email,
     password,
     confirmarPassword,
-    foto: req.file.filename
+    foto: req.file.filename,
   });
 
   return createSendToken(newUser, 201, res);
-
 });
 
 export const getLogout = CatchAsync((req, res) => {
