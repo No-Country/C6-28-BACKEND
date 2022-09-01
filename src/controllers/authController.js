@@ -51,7 +51,7 @@ export const signUp = CatchAsync(async (req, res, next) => {
     email,
     password,
     confirmarPassword,
-    foto: req.file.filename,
+    //    foto: req.file.filename,
   });
 
   return createSendToken(newUser, 201, res);

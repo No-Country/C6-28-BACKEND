@@ -107,8 +107,10 @@ export const addProduct = CatchAsync(async (req, res, next) => {
     porcentaje_oferta,
     fotos,
   });
-  res.send(200).json({
-    message: 'Producto creado correctamente',
-    newProduct,
-  });
+  res
+    .send({
+      message: 'Producto creado correctamente',
+      newProduct,
+    })
+    .status(201);
 });
