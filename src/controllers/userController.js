@@ -1,4 +1,5 @@
 import User from '../models/userModel.js';
+import Member from '../models/memberModel.js';
 import AppError from '../utils/appError.js';
 import CatchAsync from '../utils/catchAsync.js';
 import multer from 'multer';
@@ -80,4 +81,22 @@ export const updateUser = CatchAsync(async (req, res, next) => {
       user,
     });
   }
+});
+
+export const createMember = CatchAsync(async (req, res) => {
+  const { nombre, apellidos, nickname, linkedin, github, twitter } = req.body;
+
+  const member = await Member.create({
+    nombre,
+    apellidos,
+    nickname,
+    linkedin,
+    github,
+    twitter,
+  });
+
+  res.status(201).json({
+    message: 'Miembro creado correctamente',
+    member,
+  });
 });

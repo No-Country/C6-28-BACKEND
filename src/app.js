@@ -4,6 +4,7 @@ import UserRoutes from './routes/userRoutes.js';
 import ProductRoutes from './routes/productsRoutes.js';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
+import Member from './models/memberModel.js';
 
 import globalErrorHandler from './controllers/errorController.js';
 import AppError from './utils/appError.js';
@@ -50,6 +51,17 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/users', UserRoutes);
 app.use('/api/v1/products', ProductRoutes);
+app.get('/members', async (req, res) => {
+  const found = await Member.findAll();
+
+  res.status(200).json({
+    status: 'success',
+    results: found.length,
+    data: {
+      members: found,
+    },
+  });
+});
 
 app.all('*', (req, res, next) => {
   next(new AppError(`La ruta ${req.originalUrl} no existe en este servidor`, 404));

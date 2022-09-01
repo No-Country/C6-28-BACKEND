@@ -5,6 +5,8 @@ import * as AuthRoute from '../controllers/authController.js';
 import * as UserValidator from '../validators/authValidator.js';
 import * as AuthMiddleware from '../middlewares/authMiddleware.js';
 
+router.post('/createMember', UserRoute.createMember);
+
 router.post('/login', UserValidator.validatorLoginUser, AuthRoute.login);
 router.post(
   '/signup',
