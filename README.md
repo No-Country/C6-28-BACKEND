@@ -30,7 +30,7 @@ Este proyecto nace de la necesidad de encontrar un buen lugar donde comprar las 
 
 El proyecto lo realizamos y lo logramos con la ausencia de un perfil UX/UI porque la mayoria nos desempeñamos bien como backend o frontend, pero aún asi se logró un buen trabajo gracias al excelente equipo que tenemos, aquí una muestra del diseño inicial que teniamos y que se fue puliendo en cada modificación 👌 [Figma](https://www.figma.com/file/DG9GnIsAu7DzHoGLoJBYSO/Mundo-Mascota?node-id=0%3A1)
 
-![image](./assets/figma.PNG)
+![](/assets/figma.png)
 
 ### Frontend
 
@@ -40,11 +40,11 @@ Realizamos para cada interfaz un componente y tratamos de desacoplar algunos com
 
 Aqui algunas de las interfaces que realizamos con el equipo de frontend.
 
-![Image](./assets/register.PNG) <br/>
-![Image](./assets/productos.PNG) <br/>
-![Image](./assets/detalle.PNG) <br/>
-![Image](./assets/carrito.PNG) <br/>
-![Image](./assets/about.PNG) <br/>
+![Image](./assets/register.png) <br/>
+![Image](./assets/productos.png) <br/>
+![Image](./assets/detalle.png) <br/>
+![Image](./assets/carrito.png) <br/>
+![Image](./assets/about.png) <br/>
 
 ### BackEnd
 
@@ -52,7 +52,7 @@ Por parte del equipo de backend se realizó la configuración para la conexión 
 #### Documentación
 https://c6-28.up.railway.app/
 
-![Image](./assets/backend.PNG)
+![Image](./assets/backend.png)
 
 ### Modelado de la Base de Datos
 
